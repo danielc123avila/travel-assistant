@@ -1,18 +1,28 @@
-import { RETURN } from "@langchain/langgraph/dist/constants";
-import { Router, Request, Response } from "express";
+import * as express from 'express';
+import { destinationAgent } from '../agents/destinationAgent';
+import { packingAgent } from '../agents/packingAgent';
 
-const router = Router();
+const router = express.Router();
 
-router.post("/", (req: Request, res: Response) => {
-  const { message } = req.body;
+router.post('/', async (req, res) => {
+  const { message, context } = req.body;
 
-  if (!message) {
-    res.status(400).json({ error: "Message is required" });
+  let response;
+
+  try {
+    if (message.toLowerCase().includes('destinos')) {
+      response = await destinationAgent(message);
+    } else if (message.toLowerCase().includes('clima') && context?.destination) {
+      response = await packingAgent(context.destination, context.days || 1); // Días predeterminados si no se proporcionan
+    } else {
+      response = 'Lo siento, no entendí tu solicitud.';
+    }
+  } catch (error) {
+    console.error('Error procesando la solicitud:', error);
+    response = 'Hubo un error procesando tu solicitud.';
   }
 
-  const response = { reply: "recibi tu mensaje", message };
-
-  res.json(response);
+  res.json({ response });
 });
 
 export default router;
