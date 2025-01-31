@@ -1,7 +1,7 @@
 import { ApifyClient } from "apify-client";
 
 const client = new ApifyClient({
-  token: "<YOUR_API_TOKEN>",
+  token: "apify_api_aPJg37v3FOt8yzcvShU0rhMKCmj75l1u1vmI",
 });
 
 export const searchFlights = async (
