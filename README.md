@@ -149,4 +149,3 @@ Si deseas contribuir a este proyecto, por favor sigue estos pasos:
 2. Crea una nueva rama (`git checkout -b feature/nueva-funcionalidad`).
 3. Realiza tus cambios y haz commit (`git commit -m 'Agregada nueva funcionalidad'`).
 4. Envía un pull request.
-
